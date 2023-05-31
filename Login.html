@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LOGIN</title>
+  <style>
+    /* Link de la imagen de fondo https://www.uwp.edu/learn/programs/images/Health-psych-header-1920-x-800.jpg */
+    body {
+      background-image: url("https://printincclothing.co.uk/wp-content/uploads/2020/05/scrubs.jpg");
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      color: rgb(1, 0, 5);
+    }
+    
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 35px;
+      background-color: #e4f0f6;
+      border-radius: 10px;
+      opacity: 0.9;
+      text-align: center;
+    }
+    
+    h2 {
+      color: #3d9bc4;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #1397b8;
+      border-radius: 4px;
+    }
+    
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      background-color: #1a91b9;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #265580;
+    }
+  
+    /* Estilos para la ventana emergente */
+    .modal {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0s, opacity 0.3s;
+    }
+  
+    .modal.show {
+      visibility: visible;
+      opacity: 1;
+      transition-delay: 0.3s;
+    }
+  
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      max-width: 400px;
+      text-align: center;
+    }
+  
+    .modal-content h2 {
+      margin-top: 0;
+    }
+  
+    .modal-content input {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  
+    .modal-content button {
+      padding: 10px 20px;
+      background-color: #4287f5;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <br>
+  <br>
+  <br><br><br><br><br>
+  <div class="container">
+    <form action="EjemploPaciente.html" id="loginForm">
+      <h2>¡BIENVENIDO DOCTOR!</h2>
+      <div class="form-group">
+        <label for="rfc">RFC:</label>
+        <input type="text" id="rfc" name="rfc" placeholder="Ingresa tu RFC">
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña">
+      </div>
+      <div class="form-group1">
+        <input type="submit" value="Iniciar sesión">
+      </div>
+      <br>
+      <br>
+      <div class="form-group1">
+        <input type="button" id="agregarMedicoBtn" value="Agregar Médico">
+      </div>
+    </form>
+  
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+          <h2>Agregar Médico</h2>
+          <div class="form-group">
+            <label for="rfc">RFC:</label>
+            <input type="text" id="rfc" name="RFC" placeholder="RFC">
+          </div>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="apellidoP">Apellido Paterno:</label>
+            <input type="text" id="apellidoP" name="apellidoP" placeholder="Apellido Paterno">
+          </div>
+          <div class="form-group">
+            <label for="apellidoM">Apellido Materno:</label>
+            <input type="text" id="apellidoM" name="apellidoM" placeholder="Apellido Materno">
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" placeholder="Correo">
+          </div>
+          <div class="form-group">
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" placeholder="Contraseña">
+          </div>
+          <div class="form-group">
+            <label for="rol">Rol:</label>
+            <input type="text" id="rol" name="rol" placeholder="Rol">
+          </div>
+          <button class="save-button">Guardar</button>
+        </div>
+      </div>
+    
+      <script>
+        const agregarMedicoBtn = document.querySelector('#agregarMedicoBtn');
+        const modal = document.querySelector('#editModal');
+        const loginForm = document.querySelector('#loginForm');
+    
+        agregarMedicoBtn.addEventListener('click', function() {
+          modal.classList.add('show');
+        });
+    
+        loginForm.addEventListener('submit', function(event) {
+          event.preventDefault();
+          window.location.href = "dashboard.html";
+        });
+    
+        const saveButton = document.querySelector('.save-button');
+        saveButton.addEventListener('click', function() {
+          // Lógica para guardar los datos del médico
+          modal.classList.remove('show');
+        });
+      </script>
+    </div>
+  </body>
+  </html>

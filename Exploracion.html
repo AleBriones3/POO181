@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exploración Paciente</title>
+  <style>
+  /* Link de la imagen de fondo https://www.uwp.edu/learn/programs/images/Health-psych-header-1920-x-800.jpg */
+  body {
+    background-image: url("https://printincclothing.co.uk/wp-content/uploads/2020/05/scrubs.jpg");
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    color: rgb(1, 0, 5);
+  }
+  
+  .container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 35px;
+    background-color: #e4f0f6;
+    border-radius: 10px;
+    opacity: 0.9;
+    text-align: center;
+  }
+  
+  h2 {
+    color: #3d9bc4;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #1397b8;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a91b9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #265580;
+  }
+
+  /* Estilos para la ventana emergente */
+  .modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.3s;
+  }
+
+  .modal.show {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0.3s;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    max-width: 400px;
+    text-align: center;
+  }
+
+  .modal-content h2 {
+    margin-top: 0;
+  }
+
+  .modal-content input {
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .modal-content button {
+    padding: 10px 20px;
+    background-color: #4287f5;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>Exploración Paciente</h1>
+
+    <div class="header">
+        <h1>Búscar Pacientes</h1>
+      </div>
+    
+      <div class="container">
+        <div class="search-form">
+          <form>
+            <input type="text" placeholder="Nombre del Paciete o No. Expediente" />
+            <br>
+            <br>
+            <input type="submit" value="Buscar" />
+          </form>
+        </div>
+   <!--  <div class="form-group">
+      <label for="busqueda">Búsqueda por paciente:</label>
+      <input type="text" id="busqueda" placeholder="Ingrese el nombre del paciente">
+      <button onclick="buscarPaciente()">Buscar</button>
+    </div> -->
+
+    <div id="paciente-info" style="display: none;">
+      <h2>Información del Paciente:</h2>
+      <p><strong>Nombre:</strong> <span id="nombre-paciente"></span></p>
+      <p><strong>Edad:</strong> <span id="edad-paciente"></span></p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="form-group">
+      <label for="fecha">Fecha:</label>
+      <input type="text" id="fecha" placeholder="Fecha de la exploración">
+    </div>
+
+    <div class="form-group">
+      <label for="peso">Peso:</label>
+      <input type="number" id="peso" placeholder="Peso del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="altura">Altura:</label>
+      <input type="number" id="altura" placeholder="Altura del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="temperatura">Temperatura:</label>
+      <input type="number" id="temperatura" placeholder="Temperatura del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="latidos">Latidos por minuto:</label>
+      <input type="number" id="latidos" placeholder="Latidos por minuto del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="saturacion">Saturación de oxígeno:</label>
+      <input type="number" id="saturacion" placeholder="Saturación de oxígeno del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="glucosa">Glucosa:</label>
+      <input type="number" id="glucosa" placeholder="Nivel de glucosa del paciente">
+    </div>
+
+    <div class="form-group">
+      <label for="sintomas">Síntomas:</label>
+      <textarea id="sintomas" rows="4" placeholder="Síntomas del paciente"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="diagnostico">Diagnóstico:</label>
+      <textarea id="diagnostico" rows="4" placeholder="Diagnóstico del paciente"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="tratamiento">Tratamiento:</label>
+      <textarea id="tratamiento" rows="4" placeholder="Tratamiento y medicamentos"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="estudios">Solicitud de estudios:</label>
+      <textarea id="estudios" rows="4" placeholder="Solicitud de estudios"></textarea>
+    </div>
+
+    <div class="button-group">
+      <button onclick="guardarDatos()">Guardar</button>
+    </div>
+  </div>
+
+  <script>
+    
+
+    
+
+    function guardarDatos() {
+      // Obtener los valores de los campos
+      var fecha = document.getElementById("fecha").value;
+      var peso = document.getElementById("peso").value;
+      var altura = document.getElementById("altura").value;
+      var temperatura = document.getElementById("temperatura").value;
+      var latidos = document.getElementById("latidos").value;
+      var saturacion = document.getElementById("saturacion").value;
+      var glucosa = document.getElementById("glucosa").value;
+      var sintomas = document.getElementById("sintomas").value;
+      var diagnostico = document.getElementById("diagnostico").value;
+      var tratamiento = document.getElementById("tratamiento").value;
+      var estudios = document.getElementById("estudios").value;
+    }
+  </script>
+</body>
+</html>

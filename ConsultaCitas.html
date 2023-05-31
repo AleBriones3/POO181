@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Consultar Citas</title>
+  <style>
+    body {
+      background-image: url("https://i1.wp.com/pilotzinoticias.com/wp-content/uploads/2018/10/Digitalizaci%C3%B3n-Salud.jpg?fit=1366%2C765&ssl=1");
+      background-color: #f2f2f2;
+      font-family: Arial, sans-serif;
+    }
+
+    .header {
+      background-color: #1472FF;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      margin-top: 50px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .search-form input[type="text"] {
+      width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .search-form input[type="date"] {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .search-form input[type="submit"] {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #1472FF;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .patient-info {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .patient-info h2 {
+      color: #1472FF;
+      margin-bottom: 10px;
+    }
+
+    .patient-info p {
+      margin: 0;
+    }
+
+    .patients-by-date {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .patients-by-date table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    .patients-by-date table th,
+    .patients-by-date table td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .patients-by-date table th {
+      background-color: #1472FF;
+      color: #fff;
+    }
+
+    .patients-by-date table td {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Consultar Citas</h1>
+  </div>
+
+  <div class="container">
+    <div class="search-form">
+      <form id="searchForm" onsubmit="event.preventDefault(); filterAppointments()">
+        <input type="text" id="patientName" placeholder="Nombre del Paciente" />
+        <input type="date" id="appointmentDate" />
+        <input type="submit" value="Buscar" />
+      </form>
+    </div>
+
+    <div class="patients-by-date">
+      <h2>Citas</h2>
+      <table id="appointmentsTable">
+        <tr>
+          <th>Nombre del Paciente</th>
+          <th>Fecha</th>
+          <th>Hora</th>
+        </tr>
+        <tr>
+          <td>Paciente 1</td>
+          <td>2023-05-30</td>
+          <td>10:00 AM</td>
+        </tr>
+        <tr>
+          <td>Paciente 2</td>
+          <td>2023-05-30</td>
+          <td>11:00 AM</td>
+        </tr>
+        <tr>
+          <td>Paciente 3</td>
+          <td>2023-05-31</td>
+          <td>09:30 AM</td>
+        </tr>
+        <tr>
+          <td>Paciente 4</td>
+          <td>2023-05-31</td>
+          <td>02:00 PM</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function filterAppointments() {
+      const patientNameInput = document.getElementById("patientName");
+      const appointmentDateInput = document.getElementById("appointmentDate");
+      const appointmentsTable = document.getElementById("appointmentsTable");
+      const rows = appointmentsTable.getElementsByTagName("tr");
+
+      const patientName = patientNameInput.value.toLowerCase();
+      const appointmentDate = appointmentDateInput.value;
+
+      for (let i = 1; i < rows.length; i++) {
+        const patientCell = rows[i].getElementsByTagName("td")[0];
+        const dateCell = rows[i].getElementsByTagName("td")[1];
+
+        const patientMatch = patientName === "" || patientCell.innerHTML.toLowerCase().indexOf(patientName) > -1;
+        const dateMatch = appointmentDate === "" || dateCell.innerHTML === appointmentDate;
+
+        if (patientMatch && dateMatch) {
+          rows[i].style.display = "";
+        } else {
+          rows[i].style.display = "none";
+        }
+      }
+    }
+  </script>
+</body>
+</html>
