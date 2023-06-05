@@ -1,17 +1,16 @@
 body{
-    padding: 35%;
+    margin: 38%;
     top: 50px;
-    background-color: white;
+    background-color: rgb(187, 111, 111);
    
 }
 .container{
-    background-color: rgba(124, 192, 225, 0.793);
+    background-color: rgba(225, 124, 200, 0.793);
     width: 350px;
     height: 200px;
     text-align: center;
 }
 h1{
     text-align: center;
-   
     color: #201976;
 }
