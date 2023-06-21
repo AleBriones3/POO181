@@ -1,5 +1,5 @@
 """ Importación del Framework """
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, flash
 
 """ Importación de MySQL """
 from flask_mysqldb import MySQL
@@ -12,6 +12,7 @@ app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='DBFlask'
+app.secret_key='mysecretkey'
 mysql=MySQL(app)
 
 """ Declaración de la ruta, pertenece a http://localhost:5000  (El @app.route('/') es la ruta index o ruta principal)"""
@@ -24,11 +25,19 @@ def index():
 @app.route('/guardar', methods=['POST']) 
 def Guardar():
     if request.method == 'POST':
-        titulo= request.form['txtTitulo']
-        artista= request.form['txtArtista']
-        anio= request.form['txtAnio']
-        print(titulo,artista,anio)
-    return 'Los datos llegaron ;)'  
+
+        """ Pasamos a variables el contenido de los imputs """
+        Vtitulo= request.form['txtTitulo']
+        Vartista= request.form['txtArtista']
+        Vanio= request.form['txtAnio']
+      
+        """ Conectar a la BD y ejecutar el insert """
+        CS= mysql.connection.cursor()
+        CS.execute('insert into tb_albums(titulo, artista, anio) values(%s,%s,%s)',(Vtitulo,Vartista,Vanio))
+        mysql.connection.commit()
+        
+    flash('El album fue agregado correctamente')
+    return redirect(url_for('index'))
 
 @app.route('/eliminar') 
 def Eliminar():
