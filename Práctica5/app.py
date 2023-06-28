@@ -18,7 +18,11 @@ mysql=MySQL(app)
 """ Declaración de la ruta, pertenece a http://localhost:5000  (El @app.route('/') es la ruta index o ruta principal)"""
 @app.route('/') 
 def index():
-    return render_template('index.html')
+    CC= mysql.connection.cursor()
+    CC.execute('select * from tb_albums')
+    conAlbums= CC.fetchall()
+    print(conAlbums)
+    return render_template('index.html', listAlbums= conAlbums)
 
 """ Ruta http:localhost:5000/guardar tipo POST para Insert """
 """ "Methods" La ruta va a recibir información del formulario """
