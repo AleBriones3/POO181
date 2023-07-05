@@ -51,8 +51,18 @@ def Editar(id):
     return render_template('editarAlbum.html', Album=consultaId)
 
 @app.route('/actualizar/<id>', methods=['POST']) 
-def Editar(id):
-    return 0
+def Actualizar(id):
+    if request.method == 'POST':
+        VARtitulo= request.form['txtTitulo']
+        VARartista= request.form['txtArtista']
+        VARanio= request.form['txtAnio']
+
+        curAct= mysql.connection.cursor()
+        curAct.execute('UPDATE tb_albums set titulo= %s, artista= %s, anio=%s WHERE id=%s',(VARtitulo, VARartista, VARanio, id))
+        mysql.connection.commit()
+
+    flash('Se actualizó el Album '+ VARtitulo)
+    return redirect(url_for('index'))
 
 
 @app.route('/eliminar') 
