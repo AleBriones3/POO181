@@ -61,13 +61,28 @@ def Actualizar(id):
         curAct.execute('UPDATE tb_albums set titulo= %s, artista= %s, anio=%s WHERE id=%s',(VARtitulo, VARartista, VARanio, id))
         mysql.connection.commit()
 
-    flash('Se actualizó el Album '+ VARtitulo)
+    flash('Se actualizó el Album '+VARtitulo)
     return redirect(url_for('index'))
 
+@app.route('/borrar/<id>') 
+def Borrar(id):
+    CursorId= mysql.connection.cursor()
+    CursorId.execute('SELECT * FROM tb_albums where id=%s',(id,))
+    ConsultaId=CursorId.fetchone()
+    return render_template('eliminarAlbum.html', Album=ConsultaId)
 
-@app.route('/eliminar') 
-def Eliminar():
-    return "Se eliminó en la BD"
+
+@app.route('/eliminar/<id>', methods=['POST']) 
+def Eliminar(id):
+    if request.method == 'POST':
+        vTitulo= request.form['txtTitulo']
+
+        Cursorr= mysql.connection.cursor()
+        Cursorr.execute('DELETE FROM tb_albums WHERE id=%s', (id,))
+        mysql.connection.commit()
+
+    flash('Se Eliminó el Album '+vTitulo)
+    return redirect(url_for('index'))
 
 """ Ejecución del servidor a través del puerto 5000 """
 if __name__ == '__main__':
