@@ -1,56 +1,44 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <form action="/buscar" method="POST">
-        
-        <br><br>
-        {% with mensajes= get_flashed_messages() %}
-            {% if mensajes %}
-                {% for msj in mensajes %}
-                    <h3> {{ msj }} </h3>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-    </form>
-    <h1>Buscar Frutas </h1>
-    <br>
-    <table>
-        <thead>
-            <tr>
-                <td>Id: </td>
-                <td>Nombre de la Fruta: </td>
-                <td>Temporada de la Fruta: </td>
-                <td>Precio de la Fruta: </td>
-                <td>Stock de la Fruta: </td>
-            </tr>            
-        </thead>
-        <tbody>
-            {% for frut in listFrutas %}
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Resultado de la búsqueda</title>
+    </head>
+    <body>
+        <input type="text" name="nombreFruta" placeholder="Nombre de la fruta">
+        <button type="submit">Buscar</button>
+
+        <h1>Resultado de la búsqueda</h1>
+        <br>
+        <table>
+            <thead>
                 <tr>
-                    <td>{{frut.0}}</td>
-                    <td>{{frut.1}}</td>
-                    <td>{{frut.2}}</td>
-                    <td>{{frut.3}}</td>
-                    <td>{{frut.4}}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-          <button type="submit">Buscar</button>
+                    <th>Id</th>
+                    <th>Nombre de la Fruta</th>
+                    <th>Temporada de la Fruta</th>
+                    <th>Precio de la Fruta</th>
+                    <th>Stock de la Fruta</th>
+                </tr>            
+            </thead>
+            <tbody>
+                {% for fruta in frutas %}
+                    <tr>
+                        <td>{{ fruta[0] }}</td>
+                        <td>{{ fruta[1] }}</td>
+                        <td>{{ fruta[2] }}</td>
+                        <td>{{ fruta[3] }}</td>
+                        <td>{{ fruta[4] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         <button type="button" onclick="Regresar()">Regresar</button>
-    </form>
 
-    <script>
-         function Regresar() {
-            window.location.href = "{{ url_for('index') }}";
-        }
-    </script>
-    </form>
-
-</body>
+        <script>
+            function Regresar() {
+                window.location.href = "{{ url_for('index') }}";
+            }
+        </script>
+    </body>
 </html>

@@ -26,15 +26,17 @@ def index():
 
 """ Ruta http:localhost:5000/guardar tipo POST para Insert """
 """ "Methods" La ruta va a recibir información del formulario """
-@app.route('/buscar') 
-def BuscarF():
-    cursorId= mysql.connection.cursor()
-    cursorId.execute('SELECT * FROM tbfrutas where id=%s',(id,))
-    consultaId=cursorId.fetchone()
-    return render_template('BuscarFruta.html', frut=consultaId)
-
+@app.route('/buscar/<id>', methods=['GET', 'POST'])
+def BuscarFruta(id):
+    if request.method == 'POST':
+        nombre_fruta = request.form['nombreFruta']
+        cursor = mysql.connection.cursor()
+        cursor.execute('SELECT * FROM tbfrutas WHERE fruta LIKE %s', ('%' + nombre_fruta + '%',))
+        resultado = cursor.fetchone()
+        return render_template('buscarFruta.html', frutas=resultado)
+    
 @app.route('/buscarF', methods=['POST']) 
-def Buscar():
+def Buscar(id):
     if request.method == 'POST':
 
         """ Pasamos a variables el contenido de los imputs """
@@ -45,11 +47,12 @@ def Buscar():
       
         """ Conectar a la BD y ejecutar el insert """
         CS= mysql.connection.cursor()
-        CS.execute('insert into tbfrutas(fruta, temporada, precio, stock) values(%s,%s,%s, %s)',(Vfruta,Vtemporada,Vprecio,Vstock))
+        CS.execute('insert into tbfrutas(fruta, temporada, precio, stock WHERE id=%s values(%s,%s,%s,%s)',(Vfruta,Vtemporada,Vprecio,Vstock))
         mysql.connection.commit()
         
     flash('La fruta fue agregada correctamente')
     return redirect(url_for('index'))
+
 
 @app.route('/ingresar') 
 def Ingresar():
