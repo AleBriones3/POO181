@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> Fruta a Eliminar: </h1>
+    <br><br>
+    <form action="/eliminar/{{frut.0}}" method="POST">
+        <input type="text" name="txtFruta" value="{{frut.1}}">
+        <input type="text" name="txtTemporada" value="{{frut.2}}">
+        <input type="text" name="txtPrecio" value="{{frut.3}}">
+        <input type="number" name="txtStock" value="{{frut.4}}">
+          <button type="submit" onclick="return Eliminar()">Eliminar</button>
+        <button type="button" onclick="Regresar()">Regresar</button>
+    </form>
+
+    <script>
+        function Eliminar() {
+            return confirm("¿Estás seguro de que deseas eliminar esa FRUTA?");
+        }
+
+        function Regresar() {
+            window.location.href = "{{ url_for('index') }}";
+        }
+    </script>
+    </form>
+
+</body>
+</html>
