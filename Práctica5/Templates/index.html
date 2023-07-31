@@ -2,10 +2,12 @@
  {% extends 'plantilla.html' %}
 
  {% block body %}    
-    <br>
-    <h1>Gestión de Albums</h1>
     
-    <br><br>
+ 
+    <div class="mb-5">         
+         <h1 class="display-1 text-center">Gestión de Albums</h1>
+    </div>
+
     {% with mensajes= get_flashed_messages() %}
         {% if mensajes %}
             {% for msj in mensajes %}
@@ -14,42 +16,60 @@
         {% endif %}
     {% endwith %}
 
+<div class="container">  
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card card-body mt-5 mb-5">
+                <form action="/guardar" method="POST">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="txtTitulo" placeholder="Escribe el Título">
+                    </div>
+                   <div class="mb-3">
+                        <input type="text" class="form-control" name="txtArtista" placeholder="Escribe el Artista">
+                   </div>
+                   <div class="mb-3">
+                        <input type="number" class="form-control" name="txtAnio" placeholder="Escribe el Año">
+                   </div>
+                   <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-outline-warning">Guardar</button>
+                  </div>
+                    
+                </form>
+            </div>
+        </div>
+        <div class="col-md-7">
 
-    <form action="/guardar" method="POST">
-        <input type="text" name="txtTitulo" placeholder="Escribe el Título">
-        <input type="text" name="txtArtista" placeholder="Escribe el Artista">
-        <input type="number" name="txtAnio" placeholder="Escribe el Año">
-        <button type="submit">Guardar</button>
+            <div class="mb-5">         
+                <h1 class="display-5 text-center">Albums Guardados</h1>
+           </div>
+                
+            <table  class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <td class="table-warning">Id: </td>
+                        <td class="table-warning">Album: </td>
+                        <td class="table-warning">Artista: </td>
+                        <td class="table-warning">Año Publicación: </td>
+                    </tr>            
+                </thead>
+                <tbody class="table-group-divider">
+                    {% for alb in listAlbums %}
+                        <tr>
+                            <td class="table-warning">{{alb.0}}</td>
+                            <td class="table-warning">{{alb.1}}</td>
+                            <td class="table-warning">{{alb.2}}</td>
+                            <td class="table-warning">{{alb.3}}</td>
+                            <td>
+                                <a href="/editar/{{alb.0}}" class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i></a>
+                                <a href="/borrar/{{alb.0}}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
 
-    </form>
-    <br><br>
-    <h1> Albums Guardados </h1>
-    <br>
-    <table>
-        <thead>
-            <tr>
-                <td>Id: </td>
-                <td>Album: </td>
-                <td>Artista: </td>
-                <td>Año Publicación: </td>
-            </tr>            
-        </thead>
-        <tbody>
-            {% for alb in listAlbums %}
-                <tr>
-                    <td>{{alb.0}}</td>
-                    <td>{{alb.1}}</td>
-                    <td>{{alb.2}}</td>
-                    <td>{{alb.3}}</td>
-                    <td>
-                        <a href="/editar/{{alb.0}}">Editar</a>
-                        <a href="/borrar/{{alb.0}}">Borrar</a>
-                    </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
-
+            </table>
+        </div>  <!-- Col -->
+    </div>  <!-- Row -->
+</div>  <!-- Container -->
 {% endblock %}   
 
